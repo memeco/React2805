@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Carrinho de Compras</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+    input, button {
+      margin: 5px;
+    }
+  </style>
+</head>
+<body>
+  <div>
+    <h2>Carrinho de Compras</h2>
+    <input type="text" id="productInput" placeholder="Digite o nome do produto" />
+    <button id="addButton">Adicionar ao Carrinho</button>
+    <ul id="cartList"></ul>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const cart = [];
+      const productInput = document.getElementById('productInput');
+      const addButton = document.getElementById('addButton');
+      const cartList = document.getElementById('cartList');
+
+      function renderCart() {
+        cartList.innerHTML = '';
+        cart.forEach((item, index) => {
+          const li = document.createElement('li');
+          li.textContent = item;
+          const removeButton = document.createElement('button');
+          removeButton.textContent = 'Remover';
+          removeButton.addEventListener('click', () => removeFromCart(index));
+          li.appendChild(removeButton);
+          cartList.appendChild(li);
+        });
+      }
+
+      function addToCart() {
+        const product = productInput.value.trim();
+        if (product) {
+          cart.push(product);
+          productInput.value = '';
+          renderCart();
+        }
+      }
+
+      function removeFromCart(indexToRemove) {
+        cart.splice(indexToRemove, 1);
+        renderCart();
+      }
+
+      addButton.addEventListener('click', addToCart);
+    });
+  </script>
+</body>
+</html>
